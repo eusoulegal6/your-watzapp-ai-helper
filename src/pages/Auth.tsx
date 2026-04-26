@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { MessageCircle } from "lucide-react";
+import { registerAppAccount, checkAppMembership } from "@/lib/accountApp";
 
 const Auth = () => {
   const { user, loading: authLoading } = useAuth();
@@ -25,10 +26,17 @@ const Auth = () => {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        const { member } = await checkAppMembership();
+        if (!member) {
+          await supabase.auth.signOut();
+          toast.error("This email isn't registered on WhatsReply. Please sign up first.");
+          return;
+        }
         navigate("/dashboard");
       } else {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
+        await registerAppAccount();
         toast.success("Account created — signing you in…");
         // Email confirmation is disabled in test, so user is signed in immediately.
         navigate("/dashboard");
