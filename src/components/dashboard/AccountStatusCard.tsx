@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
-import { CheckCircle, Mail, Shield } from "lucide-react";
+import { CheckCircle, Shield } from "lucide-react";
 
 const AccountStatusCard = () => {
   const { user } = useAuth();
@@ -16,7 +16,7 @@ const AccountStatusCard = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">Email</span>
+          <span className="text-sm text-muted-foreground">Account</span>
           <span className="text-sm font-medium truncate max-w-[200px]">{user?.email}</span>
         </div>
         <div className="flex items-center justify-between">

@@ -1,48 +1,36 @@
-import { Clock, MessageSquare, Fingerprint, Shield, PenTool, Settings } from "lucide-react";
+import { Clock, MessageCircle, Fingerprint, Shield, Globe, Settings } from "lucide-react";
 import Reveal from "./Reveal";
 
 const benefits = [
   {
     icon: Clock,
-    title: "Fewer repetitive tasks",
-    description: "Stop typing the same answers to the same questions. Let AI handle the patterns you've already solved.",
-    color: "text-brand-red",
-    bg: "bg-brand-red/10",
+    title: "Reply 24/7, instantly",
+    description: "Customers expect WhatsApp replies in minutes. WhatsReply answers around the clock, even when you're asleep.",
   },
   {
-    icon: MessageSquare,
-    title: "More consistent replies",
-    description: "Every response follows your tone and includes the right information — no off-days or missed details.",
-    color: "text-brand-blue",
-    bg: "bg-brand-blue/10",
+    icon: MessageCircle,
+    title: "Never miss a lead",
+    description: "Every inbound message gets a thoughtful, on-brand reply — so casual enquiries don't slip through the cracks.",
   },
   {
     icon: Fingerprint,
     title: "Your business context",
-    description: "Replies are generated using your products, services, policies, and writing style — not generic templates.",
-    color: "text-brand-yellow",
-    bg: "bg-brand-yellow/10",
+    description: "Replies use your products, hours, prices, and policies — not generic templates that sound like a bot.",
   },
   {
-    icon: PenTool,
-    title: "Signatures & knowledge",
-    description: "Attach your email signature, business info, and key details so replies always feel complete and professional.",
-    color: "text-brand-green",
-    bg: "bg-brand-green/10",
+    icon: Globe,
+    title: "Speaks your customers' language",
+    description: "Auto-detects and replies in the language of the incoming message. Perfect for international audiences.",
   },
   {
     icon: Shield,
     title: "Built for reliability",
-    description: "The unread-only workflow ensures each email is processed once. No duplicate replies, no stuck automation.",
-    color: "text-brand-red",
-    bg: "bg-brand-red/10",
+    description: "Each chat is processed once. No duplicate replies, no infinite loops, no embarrassing mistakes.",
   },
   {
     icon: Settings,
     title: "Configurable rules",
-    description: "Set sender filters, CC/BCC defaults, and reply preferences to match your operational needs.",
-    color: "text-brand-blue",
-    bg: "bg-brand-blue/10",
+    description: "Set per-contact filters, business hours, and tone preferences to match how you actually run your business.",
   },
 ];
 
@@ -52,10 +40,10 @@ const BenefitsSection = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Built for people who actually use email to run a business
+            Built for businesses that actually run on WhatsApp
           </h2>
           <p className="text-muted-foreground text-lg">
-            Not another inbox widget. A focused tool for operational email.
+            Not another chat widget. A focused tool for operational customer messaging.
           </p>
         </div>
 
@@ -66,8 +54,8 @@ const BenefitsSection = () => {
               delay={i * 80}
               className="card-lift rounded-xl border border-border bg-card p-6"
             >
-              <div className={`card-lift-icon inline-flex h-9 w-9 items-center justify-center rounded-lg ${b.bg} mb-4`}>
-                <b.icon className={`h-5 w-5 ${b.color}`} />
+              <div className="card-lift-icon inline-flex h-9 w-9 items-center justify-center rounded-lg bg-wa-green/10 mb-4">
+                <b.icon className="h-5 w-5 text-wa-green" />
               </div>
               <h3 className="font-semibold mb-2">{b.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{b.description}</p>

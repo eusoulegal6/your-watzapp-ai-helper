@@ -1,34 +1,26 @@
-import { Database, UserCog, Filter, Mail } from "lucide-react";
+import { Database, UserCog, Filter, Clock } from "lucide-react";
 import Reveal from "./Reveal";
 
 const features = [
   {
     icon: Database,
     title: "Business information",
-    description: "Save your company details, products, and services so AI replies are always accurate and on-brand.",
-    color: "text-brand-red",
-    bg: "bg-brand-red/10",
+    description: "Save your hours, location, products, and prices so AI replies are always accurate and on-brand.",
   },
   {
     icon: UserCog,
-    title: "Reply preferences",
-    description: "Set your tone, formality level, and default response patterns to match how you actually write.",
-    color: "text-brand-blue",
-    bg: "bg-brand-blue/10",
+    title: "Tone & style",
+    description: "Set your tone — friendly, professional, casual — and how short or detailed replies should be.",
   },
   {
     icon: Filter,
-    title: "Sender filters",
-    description: "Control which emails the extension processes. Filter by sender, domain, or subject line patterns.",
-    color: "text-brand-yellow",
-    bg: "bg-brand-yellow/10",
+    title: "Contact filters",
+    description: "Choose which chats WhatsReply handles. Whitelist customers, mute groups, or skip family chats entirely.",
   },
   {
-    icon: Mail,
-    title: "CC/BCC defaults",
-    description: "Automatically include team members or distribution lists on outgoing replies when needed.",
-    color: "text-brand-green",
-    bg: "bg-brand-green/10",
+    icon: Clock,
+    title: "Business hours",
+    description: "Auto-reply only during business hours, or send polite out-of-office messages outside them.",
   },
 ];
 
@@ -37,7 +29,7 @@ const CustomizationSection = () => {
     <section className="py-24 md:py-32">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-brand-yellow/20 bg-brand-yellow/5 px-4 py-1.5 text-sm text-brand-yellow mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-wa-green/20 bg-wa-green/5 px-4 py-1.5 text-sm text-wa-green mb-6">
             Coming with account support
           </div>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
@@ -51,8 +43,8 @@ const CustomizationSection = () => {
         <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {features.map((f, i) => (
             <Reveal key={f.title} delay={i * 80} className="card-lift flex gap-4 p-5 rounded-xl border border-border bg-card">
-              <div className={`card-lift-icon flex h-9 w-9 items-center justify-center rounded-lg ${f.bg} shrink-0`}>
-                <f.icon size={18} className={f.color} />
+              <div className="card-lift-icon flex h-9 w-9 items-center justify-center rounded-lg bg-wa-green/10 shrink-0">
+                <f.icon size={18} className="text-wa-green" />
               </div>
               <div>
                 <h3 className="font-semibold text-sm mb-1">{f.title}</h3>

@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Clock, Check, Loader2 } from "lucide-react";
+import { MessageCircle, Clock, Check, Loader2 } from "lucide-react";
 import type { FlaggedEmail } from "@/hooks/useFlaggedEmails";
 import { useResolveFlagged } from "@/hooks/useResolveFlagged";
 import { useToast } from "@/hooks/use-toast";
@@ -78,7 +78,7 @@ export default function FlaggedEmailCard({ email }: { email: FlaggedEmail }) {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5 text-sm font-medium truncate">
-              <Mail size={14} className="text-muted-foreground shrink-0" />
+              <MessageCircle size={14} className="text-muted-foreground shrink-0" />
               <span className="truncate">{displayName}</span>
             </div>
             {email.senderName && (
@@ -105,6 +105,11 @@ export default function FlaggedEmailCard({ email }: { email: FlaggedEmail }) {
           <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
             {email.snippet || email.reason || "Flagged for your review."}
           </p>
+        </div>
+
+        <div className="pt-1 border-t border-border/50 flex items-center justify-between gap-2">
+          <span className="text-[11px] text-muted-foreground">
+            Received {dtf.format(new Date(email.createdAt))}
         </div>
 
         <div className="pt-1 border-t border-border/50 flex items-center justify-between gap-2">

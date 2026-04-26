@@ -6,54 +6,61 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 20% 10%;
+    --background: 150 25% 98%;
+    --foreground: 170 25% 12%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 220 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 170 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 170 25% 12%;
 
-    --primary: 220 90% 56%;
+    /* WhatsApp green */
+    --primary: 142 70% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 20%;
+    --secondary: 150 20% 95%;
+    --secondary-foreground: 170 25% 20%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 150 20% 95%;
+    --muted-foreground: 170 10% 45%;
 
-    --accent: 145 65% 42%;
+    /* WhatsApp deep teal */
+    --accent: 170 75% 30%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 80% 55%;
+    --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 88%;
-    --input: 220 13% 88%;
-    --ring: 220 90% 56%;
+    --border: 150 15% 88%;
+    --input: 150 15% 88%;
+    --ring: 142 70% 45%;
 
-    --radius: 0.625rem;
+    --radius: 0.875rem;
 
-    --hero-gradient: linear-gradient(135deg, hsl(0 80% 55%), hsl(220 90% 56%), hsl(50 92% 52%), hsl(145 65% 42%));
-    --glow-primary: 220 90% 56%;
-    --glow-accent: 145 65% 42%;
-    --surface-elevated: 0 0% 96%;
+    /* Hero gradient: emerald → green → teal */
+    --hero-gradient: linear-gradient(135deg, hsl(142 70% 45%), hsl(160 75% 40%), hsl(170 75% 30%));
+    --glow-primary: 142 70% 45%;
+    --glow-accent: 170 75% 30%;
+    --surface-elevated: 150 20% 96%;
 
-    --color-red: 0 80% 55%;
-    --color-blue: 220 90% 56%;
-    --color-yellow: 50 92% 52%;
-    --color-green: 145 65% 42%;
+    /* Chat tokens */
+    --chat-out: 96 60% 85%;          /* outgoing bubble (light WhatsApp green) */
+    --chat-in: 0 0% 100%;            /* incoming bubble (white) */
+    --chat-bg: 42 35% 92%;           /* warm cream/beige wallpaper */
+    --check-blue: 199 85% 58%;       /* read receipt blue */
+    --wa-green: 142 70% 45%;
+    --wa-teal: 170 75% 30%;
+    --wa-header: 168 72% 22%;        /* dark teal chat header */
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 20% 15%;
-    --sidebar-primary: 220 90% 56%;
+    --sidebar-background: 150 25% 98%;
+    --sidebar-foreground: 170 25% 15%;
+    --sidebar-primary: 142 70% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 14% 94%;
-    --sidebar-accent-foreground: 220 20% 15%;
-    --sidebar-border: 220 13% 90%;
-    --sidebar-ring: 210 100% 56%;
+    --sidebar-accent: 150 20% 94%;
+    --sidebar-accent-foreground: 170 25% 15%;
+    --sidebar-border: 150 15% 90%;
+    --sidebar-ring: 142 70% 45%;
   }
 }
 
@@ -101,6 +108,28 @@
 
   .surface-elevated {
     background-color: hsl(var(--surface-elevated));
+  }
+
+  /* WhatsApp-style cream chat wallpaper with subtle dot pattern */
+  .chat-wallpaper {
+    background-color: hsl(var(--chat-bg));
+    background-image:
+      radial-gradient(hsl(var(--wa-teal) / 0.06) 1px, transparent 1px),
+      radial-gradient(hsl(var(--wa-green) / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px, 36px 36px;
+    background-position: 0 0, 11px 11px;
+  }
+
+  /* WhatsApp bubble tails */
+  .bubble-in {
+    background: hsl(var(--chat-in));
+    border-radius: 12px 12px 12px 4px;
+    box-shadow: 0 1px 1px hsl(170 25% 12% / 0.08);
+  }
+  .bubble-out {
+    background: hsl(var(--chat-out));
+    border-radius: 12px 12px 4px 12px;
+    box-shadow: 0 1px 1px hsl(170 25% 12% / 0.08);
   }
 
   .card-lift {

@@ -57,10 +57,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        "brand-red": "hsl(var(--color-red))",
-        "brand-blue": "hsl(var(--color-blue))",
-        "brand-yellow": "hsl(var(--color-yellow))",
-        "brand-green": "hsl(var(--color-green))",
+        // WhatsApp brand tokens
+        "wa-green": "hsl(var(--wa-green))",
+        "wa-teal": "hsl(var(--wa-teal))",
+        "wa-header": "hsl(var(--wa-header))",
+        "chat-out": "hsl(var(--chat-out))",
+        "chat-in": "hsl(var(--chat-in))",
+        "chat-bg": "hsl(var(--chat-bg))",
+        "check-blue": "hsl(var(--check-blue))",
+        // Back-compat aliases (older components still use brand-*)
+        "brand-red": "hsl(var(--destructive))",
+        "brand-blue": "hsl(var(--check-blue))",
+        "brand-yellow": "hsl(var(--accent))",
+        "brand-green": "hsl(var(--wa-green))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -104,6 +113,11 @@ export default {
           "0%": { transform: "scale(1)", opacity: "0.6" },
           "100%": { transform: "scale(2.4)", opacity: "0" },
         },
+        "bubble-pop": {
+          "0%": { opacity: "0", transform: "scale(0.85) translateY(6px)" },
+          "70%": { opacity: "1", transform: "scale(1.02) translateY(0)" },
+          "100%": { opacity: "1", transform: "scale(1) translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -115,6 +129,7 @@ export default {
         "gradient-shift": "gradient-shift 8s ease-in-out infinite",
         "typing-dot": "typing-dot 1.4s ease-in-out infinite",
         "ping-ring": "ping-ring 2s ease-out infinite",
+        "bubble-pop": "bubble-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
       },
     },
   },

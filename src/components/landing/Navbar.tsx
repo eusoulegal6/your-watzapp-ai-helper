@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Menu, X, LogOut, User } from "lucide-react";
+import { Menu, X, LogOut, User, MessageCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useExtensionDownload } from "@/hooks/use-extension-download";
-import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,8 +28,10 @@ const Navbar = () => {
     <nav className="absolute top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <a href="/" className="flex items-center gap-2 text-xl font-bold tracking-tight">
-          <img src={logo} alt="Send Smart logo" className="h-14 w-14 md:h-16 md:w-16" width={64} height={64} />
-          <span className="text-gradient">Send Smart</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-wa-green text-primary-foreground shadow-md">
+            <MessageCircle size={20} strokeWidth={2.5} />
+          </span>
+          <span className="text-gradient">WhatsReply</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -63,7 +64,7 @@ const Navbar = () => {
                 Sign In
               </Button>
               <Button variant="hero" size="sm" onClick={handleDownload}>
-                Get the Extension
+                Get WhatsReply
               </Button>
             </>
           )}
@@ -103,7 +104,7 @@ const Navbar = () => {
                   Sign In
                 </Button>
                 <Button variant="hero" size="sm" onClick={(e) => { handleDownload(e); setMobileOpen(false); }}>
-                  Get the Extension
+                  Get WhatsReply
                 </Button>
               </>
             )}

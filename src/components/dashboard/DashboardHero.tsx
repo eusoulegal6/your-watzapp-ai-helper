@@ -44,7 +44,7 @@ const DashboardHero = () => {
             Welcome back, <span className="text-gradient">{firstName}</span>
           </h1>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
-            Set up your extension, configure your reply settings, and start letting AI handle your Gmail inbox.
+            Set up your extension, configure your reply settings, and let AI handle your WhatsApp messages.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button variant="hero" size="lg" onClick={handleDownload} className="gap-2">

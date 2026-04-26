@@ -1,4 +1,4 @@
-import { Download, FolderOpen, Chrome, ToggleRight, Upload, KeyRound, CheckCircle } from "lucide-react";
+import { Download, FolderOpen, Chrome, ToggleRight, Upload, KeyRound, CheckCircle, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useExtensionDownload } from "@/hooks/use-extension-download";
 
@@ -6,12 +6,12 @@ const steps = [
   {
     icon: Download,
     title: "Download the extension",
-    description: "Download the Send Smart extension archive from the link provided.",
+    description: "Download the WhatsReply extension archive from the link below.",
   },
   {
     icon: FolderOpen,
     title: "Extract the archive",
-    description: "Extract the downloaded archive to a folder on your computer. You'll need the extracted folder for the next step.",
+    description: "Extract the downloaded archive to a folder on your computer. You'll need it in the next step.",
   },
   {
     icon: Chrome,
@@ -31,12 +31,12 @@ const steps = [
   {
     icon: KeyRound,
     title: "Pair with your account",
-    description: "Sign in to your Send Smart dashboard, generate a pairing code, and paste it into the extension popup to link it to your account.",
+    description: "Sign in to your WhatsReply dashboard, generate a pairing code, and paste it into the extension popup.",
   },
   {
-    icon: CheckCircle,
-    title: "You're ready",
-    description: "Send Smart will now appear in your Chrome toolbar. Open Gmail and the extension will start working with your unread emails.",
+    icon: MessageCircle,
+    title: "Open WhatsApp Web",
+    description: "Head to web.whatsapp.com, scan the QR with your phone, and WhatsReply will start drafting replies.",
   },
 ];
 
@@ -50,7 +50,7 @@ const InstallSection = () => {
             Install in under two minutes
           </h2>
           <p className="text-muted-foreground text-lg">
-            Send Smart is currently distributed as a manually loaded Chrome extension. Here's how to set it up.
+            WhatsReply is currently distributed as a manually loaded Chrome extension. Here's how to set it up.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ const InstallSection = () => {
         <div className="flex justify-center mt-10">
           <Button variant="hero" size="lg" onClick={handleDownload} className="gap-2">
             <Download size={18} />
-            Download Send Smart
+            Download WhatsReply
           </Button>
         </div>
 

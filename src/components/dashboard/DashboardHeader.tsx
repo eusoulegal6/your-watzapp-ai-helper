@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Download, Settings, LogOut } from "lucide-react";
+import { LogOut, MessageCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useExtensionDownload } from "@/hooks/use-extension-download";
 
 const DashboardHeader = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const { handleDownload } = useExtensionDownload();
 
   const handleSignOut = async () => {
     await signOut();
@@ -17,8 +15,11 @@ const DashboardHeader = () => {
   return (
     <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
-        <a href="/dashboard" className="text-xl font-bold tracking-tight">
-          <span className="text-gradient">Send Smart</span>
+        <a href="/dashboard" className="flex items-center gap-2 text-xl font-bold tracking-tight">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-wa-green text-primary-foreground">
+            <MessageCircle size={18} strokeWidth={2.5} />
+          </span>
+          <span className="text-gradient">WhatsReply</span>
         </a>
 
         <div className="hidden md:flex items-center gap-6">
