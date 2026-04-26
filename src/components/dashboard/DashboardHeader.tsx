@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { LogOut, MessageCircle } from "lucide-react";
+import { LogOut, MessageCircle, Moon, Sun } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@/components/ThemeProvider";
 
 const DashboardHeader = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const handleSignOut = async () => {
     await signOut();
@@ -42,6 +44,15 @@ const DashboardHeader = () => {
           <span className="hidden sm:inline text-sm text-muted-foreground truncate max-w-[180px]">
             {user?.email}
           </span>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="h-8 w-8"
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </Button>
           <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-1.5">
             <LogOut size={14} />
             <span className="hidden sm:inline">Sign Out</span>
