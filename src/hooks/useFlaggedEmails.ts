@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-const SEND_SMART_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/review-list`;
-const SEND_SMART_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+const SEND_SMART_URL =
+  "https://ocpphyjkstvfespxrajk.supabase.co/functions/v1/review-list";
+const SEND_SMART_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jcHBoeWprc3R2ZmVzcHhyYWprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODExMzUsImV4cCI6MjA5Mjc1NzEzNX0.wcqrpSVkgDZRPet_4yLcF5YYISsWqRacVNOHf_eW8uY";
 
 export interface FlaggedEmail {
   id: string;

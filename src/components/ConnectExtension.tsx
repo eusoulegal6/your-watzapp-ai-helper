@@ -12,8 +12,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Copy, Loader2, RefreshCw } from "lucide-react";
 
-const SENDSMART_PAIR_CREATE_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/pair-create`;
-const SENDSMART_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+const SENDSMART_PAIR_CREATE_URL =
+  "https://ocpphyjkstvfespxrajk.supabase.co/functions/v1/pair-create";
+const SENDSMART_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jcHBoeWprc3R2ZmVzcHhyYWprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODExMzUsImV4cCI6MjA5Mjc1NzEzNX0.wcqrpSVkgDZRPet_4yLcF5YYISsWqRacVNOHf_eW8uY";
 
 const ConnectExtension = () => {
   const navigate = useNavigate();
