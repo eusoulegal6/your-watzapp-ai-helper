@@ -8,10 +8,19 @@ import TestingSection from "@/components/dashboard/TestingSection";
 import HelpSection from "@/components/dashboard/HelpSection";
 import ConnectExtension from "@/components/ConnectExtension";
 import FlaggedReviewSection from "@/components/dashboard/FlaggedReviewSection";
+import doodleBg from "@/assets/dashboard-doodles.jpg";
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
+    <div
+      className="min-h-screen bg-background"
+      style={{
+        backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.92), hsl(var(--muted) / 0.85)), url(${doodleBg})`,
+        backgroundRepeat: "no-repeat, repeat",
+        backgroundSize: "cover, 480px auto",
+        backgroundAttachment: "fixed, fixed",
+      }}
+    >
       <DashboardHeader />
 
       <div className="container mx-auto px-4 md:px-6 py-8">
