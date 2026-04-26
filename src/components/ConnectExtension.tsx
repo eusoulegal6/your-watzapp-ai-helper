@@ -84,7 +84,7 @@ const ConnectExtension = () => {
       <CardHeader>
         <CardTitle className="text-xl">Pairing code</CardTitle>
         <CardDescription>
-          Generate a one-time code, then paste it into the extension popup.
+          Generate a one-time code, then paste it into the WhatsReply extension popup to link your WhatsApp Web to this account.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

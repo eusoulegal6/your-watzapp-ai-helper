@@ -72,7 +72,7 @@ const Auth = () => {
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gradient mb-2">Send Smart</h1>
+          <h1 className="text-2xl font-bold text-gradient mb-2">WhatsReply</h1>
           <p className="text-muted-foreground text-sm">
             {isLogin ? "Sign in to your account" : "Create your account"}
           </p>

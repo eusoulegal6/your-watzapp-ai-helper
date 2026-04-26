@@ -71,7 +71,7 @@ const SendSmartUsageCard = () => {
         <div className="flex items-center justify-between gap-2">
           <CardTitle className="text-lg flex items-center gap-2">
             <BarChart3 size={18} className="text-primary" />
-            Send Smart usage
+            WhatsReply usage
             {data?.period && (
               <span className="text-sm font-normal text-muted-foreground">
                 — {formatPeriod(data.period)}
@@ -119,7 +119,7 @@ const SendSmartUsageCard = () => {
           <>
             <div className="space-y-4">
               <UsageBar
-                label="Emails processed"
+                label="Messages replied"
                 used={data.used.emails}
                 quota={data.quota.emails}
               />
@@ -144,8 +144,8 @@ const SendSmartUsageCard = () => {
                     <TableHeader>
                       <TableRow>
                         <TableHead className="w-[140px]">Date</TableHead>
-                        <TableHead>Subject</TableHead>
-                        <TableHead>Sender</TableHead>
+                        <TableHead>Last message</TableHead>
+                        <TableHead>Contact</TableHead>
                         <TableHead className="w-[100px]">Decision</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -159,7 +159,7 @@ const SendSmartUsageCard = () => {
                             className="max-w-[240px] truncate"
                             title={r.subject}
                           >
-                            {r.subject || "(no subject)"}
+                            {r.subject || "(no message preview)"}
                           </TableCell>
                           <TableCell
                             className="max-w-[180px] truncate text-muted-foreground"
