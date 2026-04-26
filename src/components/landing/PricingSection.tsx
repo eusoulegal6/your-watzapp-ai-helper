@@ -5,11 +5,11 @@ const tiers = [
   {
     name: "Free / Early Access",
     price: "$0",
-    description: "Get started now while Send Smart is in early access.",
+    description: "Get started now while WhatsReply is in early access.",
     features: [
-      "AI-generated replies",
+      "Up to 500 AI replies / month",
       "Review Mode",
-      "Auto-Send Mode",
+      "Auto-Reply Mode",
       "Business context configuration",
       "Manual extension install",
     ],
@@ -20,14 +20,14 @@ const tiers = [
   {
     name: "Pro",
     price: "Coming soon",
-    description: "Account-based features, higher limits, and priority support.",
+    description: "Higher message limits, advanced filters, and priority support.",
     features: [
       "Everything in Free",
+      "Unlimited AI replies",
       "Cloud-synced settings",
-      "Higher daily reply quotas",
-      "Advanced sender filters",
+      "Per-contact rules & filters",
+      "Multi-language tone tuning",
       "Priority support",
-      "Team features",
     ],
     cta: "Join Waitlist",
     href: "#final-cta",
@@ -44,7 +44,7 @@ const PricingSection = () => {
             Free while in early access
           </h2>
           <p className="text-muted-foreground text-lg">
-            Start using Send Smart today at no cost. Paid plans with expanded features are on the way.
+            Start using WhatsReply today at no cost. Paid plans with expanded features are on the way.
           </p>
         </div>
 

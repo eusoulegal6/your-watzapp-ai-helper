@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "How do I update the extension?",
-    a: "Download the latest version, extract it to the same folder (replacing old files), then go to chrome://extensions and click the refresh icon on the Send Smart card.",
+    a: "Download the latest version, extract it to the same folder (replacing old files), then go to chrome://extensions and click the refresh icon on the WhatsReply card.",
   },
   {
     q: "Chrome says the extension is blocked or disabled",
@@ -20,16 +20,20 @@ const faqs = [
     a: "After extracting the downloaded archive, the dist folder is the top-level folder you extracted. Point Chrome's 'Load unpacked' dialog to this folder.",
   },
   {
-    q: "What's the difference between Review Mode and Auto-Send?",
-    a: "In Review Mode, the AI drafts replies and shows them to you for approval before sending. In Auto-Send Mode, replies are sent automatically without manual review.",
+    q: "What's the difference between Review Mode and Auto-Reply?",
+    a: "In Review Mode, the AI drafts replies into the WhatsApp chat input and waits for you to hit send. In Auto-Reply Mode, replies are sent automatically without manual review.",
   },
   {
     q: "Does it work with browsers other than Chrome?",
-    a: "Yes! Send Smart works with any Chromium-based browser including Edge, Brave, Arc, and Opera. Use the same installation steps.",
+    a: "Yes! WhatsReply works with any Chromium-based browser including Edge, Brave, Arc, and Opera. Use the same installation steps.",
   },
   {
-    q: "How does the unread email detection work?",
-    a: "Send Smart uses a dedicated Gmail view that shows only unread emails. This ensures the AI only processes new, unread messages and won't accidentally reply to conversations you've already handled.",
+    q: "Do I need WhatsApp Business?",
+    a: "No. WhatsReply runs on top of regular WhatsApp Web, so it works with both personal and business WhatsApp accounts.",
+  },
+  {
+    q: "Will WhatsReply reply to my friends and family?",
+    a: "Only if you let it. You can whitelist specific contacts or chats, mute groups entirely, and set business hours so personal chats stay personal.",
   },
 ];
 

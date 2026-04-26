@@ -35,7 +35,7 @@ const Dashboard = () => {
           </div>
         </Reveal>
 
-        {/* Send Smart usage (live from Send Smart backend) */}
+        {/* WhatsReply usage (live from backend) */}
         <Reveal delay={100}>
           <div id="usage">
             <SendSmartUsageCard />

@@ -16,7 +16,7 @@ export default function FlaggedReviewSection() {
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Flag size={18} className="text-primary" />
-          <h2 className="text-xl font-semibold">Flagged for review</h2>
+          <h2 className="text-xl font-semibold">Flagged messages</h2>
           {!isLoading && !error && (
             <Badge variant="secondary" className="ml-1">
               {items.length}
@@ -39,7 +39,7 @@ export default function FlaggedReviewSection() {
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
-            Couldn't load flagged emails: {error.message}
+            Couldn't load flagged messages: {error.message}
           </AlertDescription>
         </Alert>
       )}
@@ -65,7 +65,7 @@ export default function FlaggedReviewSection() {
             <CheckCircle2 className="h-8 w-8 text-primary" />
             <p className="font-medium">All caught up</p>
             <p className="text-sm text-muted-foreground">
-              No emails are waiting for your review.
+              No messages are waiting for your review.
             </p>
           </CardContent>
         </Card>

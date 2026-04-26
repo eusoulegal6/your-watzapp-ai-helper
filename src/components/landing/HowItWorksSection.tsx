@@ -1,25 +1,23 @@
-import { ArrowRight } from "lucide-react";
-
 const steps = [
   {
     number: "01",
-    title: "Open Gmail",
-    description: "Send Smart works through a dedicated unread-only view in Gmail. This keeps the extension focused and prevents duplicate replies.",
+    title: "Open WhatsApp Web",
+    description: "WhatsReply works inside WhatsApp Web in your Chromium browser. Open it once, and the extension takes care of the rest.",
   },
   {
     number: "02",
-    title: "AI reads and drafts",
-    description: "The extension picks up your first unread email, analyzes the content, and drafts a reply using your business context and writing style.",
+    title: "AI reads incoming messages",
+    description: "When a new message arrives in a chat, WhatsReply analyzes it and drafts a reply using your business context, tone, and saved knowledge.",
   },
   {
     number: "03",
     title: "Review or auto-send",
-    description: "In Review Mode, the draft appears in Gmail for you to approve or edit. In Auto-Send Mode, approved replies go out automatically.",
+    description: "In Review Mode, the suggested reply appears in the chat input for you to approve or edit. In Auto-Reply Mode, it's sent immediately.",
   },
   {
     number: "04",
-    title: "Email disappears from view",
-    description: "Once processed, the email leaves the unread view naturally. This built-in mechanism prevents the extension from replying twice or getting stuck.",
+    title: "Conversation moves on",
+    description: "Once handled, the chat is marked as processed. WhatsReply tracks every conversation so it never replies twice or gets stuck on the same message.",
   },
 ];
 
@@ -29,27 +27,11 @@ const HowItWorksSection = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            A focused workflow, not a messy inbox plugin
+            A focused workflow, not a noisy chat plugin
           </h2>
           <p className="text-muted-foreground text-lg">
-            Send Smart doesn't try to manage your entire inbox. It works through a reliable, scoped process that handles one email at a time.
+            WhatsReply doesn't try to manage your entire WhatsApp. It works through a reliable, scoped process that handles one conversation at a time.
           </p>
-        </div>
-
-        {/* Demo video */}
-        <div className="max-w-3xl mx-auto mb-16">
-          <div className="rounded-xl border border-border bg-card overflow-hidden shadow-2xl">
-            <video
-              className="w-full"
-              controls
-              playsInline
-              preload="metadata"
-              poster=""
-            >
-              <source src="/videos/send-smart-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
         </div>
 
         <div className="max-w-3xl mx-auto">

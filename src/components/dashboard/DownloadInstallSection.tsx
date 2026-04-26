@@ -1,16 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, FolderOpen, Chrome, ToggleRight, Upload, KeyRound, CheckCircle } from "lucide-react";
+import { Download, FolderOpen, Chrome, ToggleRight, Upload, KeyRound, MessageCircle } from "lucide-react";
 import { useExtensionDownload } from "@/hooks/use-extension-download";
 
 const steps = [
-  { icon: Download, title: "Download the package", desc: "Click the button below to download the Send Smart extension archive." },
+  { icon: Download, title: "Download the package", desc: "Click the button below to download the WhatsReply extension archive." },
   { icon: FolderOpen, title: "Extract the archive", desc: "Unzip / extract the downloaded file to a folder on your computer." },
   { icon: Chrome, title: "Open chrome://extensions", desc: "Type chrome://extensions in your browser's address bar." },
   { icon: ToggleRight, title: "Enable Developer Mode", desc: "Toggle Developer mode ON in the top-right corner." },
   { icon: Upload, title: "Load unpacked", desc: "Click 'Load unpacked' and select the extracted folder." },
   { icon: KeyRound, title: "Pair the extension", desc: "Generate a pairing code in the 'Pairing code' card above and paste it into the extension popup." },
-  { icon: CheckCircle, title: "You're ready", desc: "Send Smart appears in your toolbar. Open Gmail to start." },
+  { icon: MessageCircle, title: "Open WhatsApp Web", desc: "Head to web.whatsapp.com — WhatsReply takes over from there." },
 ];
 
 const DownloadInstallSection = () => {
@@ -27,7 +27,7 @@ const DownloadInstallSection = () => {
       <CardContent className="space-y-6">
         <Button variant="hero" size="lg" onClick={handleDownload} className="w-full gap-2">
           <Download size={18} />
-          Download Send Smart Extension
+          Download WhatsReply Extension
         </Button>
 
         <div className="grid sm:grid-cols-2 gap-3">
