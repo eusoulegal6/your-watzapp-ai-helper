@@ -110,11 +110,6 @@ export default function FlaggedEmailCard({ email }: { email: FlaggedEmail }) {
         <div className="pt-1 border-t border-border/50 flex items-center justify-between gap-2">
           <span className="text-[11px] text-muted-foreground">
             Received {dtf.format(new Date(email.createdAt))}
-        </div>
-
-        <div className="pt-1 border-t border-border/50 flex items-center justify-between gap-2">
-          <span className="text-[11px] text-muted-foreground">
-            Received {dtf.format(new Date(email.createdAt))}
           </span>
           <Button
             size="sm"
