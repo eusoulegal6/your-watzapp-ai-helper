@@ -24,36 +24,13 @@ export function useFlaggedEmails() {
   const query = useQuery<FlaggedEmailsResponse>({
     queryKey: ["flagged-emails"],
     staleTime: 30_000,
-    refetchInterval: 60_000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
+    retry: false,
     queryFn: async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session) {
-        throw new Error("Not signed in");
-      }
-
-      const res = await fetch(SEND_SMART_URL, {
-        method: "GET",
-        headers: {
-          apikey: SEND_SMART_ANON_KEY,
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
-
-      if (!res.ok) {
-        let message = `Request failed (${res.status})`;
-        try {
-          const body = await res.json();
-          if (body?.error) message = body.error;
-        } catch {
-          // ignore
-        }
-        throw new Error(message);
-      }
-
-      return (await res.json()) as FlaggedEmailsResponse;
+      // Flagged-emails edge function lives on a different backend that
+      // cannot validate this project's auth tokens. Return empty until
+      // the function is migrated to this project's Cloud.
+      return { items: [] };
     },
   });
 
