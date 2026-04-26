@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -38,6 +37,7 @@ const Auth = () => {
         });
       }
     } catch (error: any) {
+      console.error("[Auth] email auth error:", error);
       toast({
         title: "Error",
         description: error.message,
@@ -49,22 +49,31 @@ const Auth = () => {
   };
 
   const handleGoogleSignIn = async () => {
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/dashboard`,
+    // Wipe any stale session from a different Supabase project to avoid bad_jwt loops.
+    try {
+      await supabase.auth.signOut();
+    } catch {}
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith("sb-") && k.endsWith("-auth-token"))
+      .forEach((k) => localStorage.removeItem(k));
+
+    console.log("[Auth] starting Google OAuth via shared backend");
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/dashboard` },
     });
 
-    if (result.error) {
+    if (error) {
+      console.error("[Auth] Google OAuth error:", error);
       toast({
-        title: "Error",
-        description: result.error.message,
+        title: "Google sign-in failed",
+        description: `${error.message} (status ${(error as any).status ?? "?"})`,
         variant: "destructive",
       });
       return;
     }
 
-    if (result.redirected) return;
-
-    navigate("/dashboard", { replace: true });
+    console.log("[Auth] Google OAuth redirect URL:", data?.url);
   };
 
   return (
