@@ -1,56 +1,45 @@
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import DashboardHero from "@/components/dashboard/DashboardHero";
-import AccountStatusCard from "@/components/dashboard/AccountStatusCard";
+import OverviewHeader from "@/components/dashboard/OverviewHeader";
+import SidebarRail from "@/components/dashboard/SidebarRail";
+import StatTiles from "@/components/dashboard/StatTiles";
+import ActivitySection from "@/components/dashboard/ActivitySection";
 import DownloadInstallSection from "@/components/dashboard/DownloadInstallSection";
 import TestingSection from "@/components/dashboard/TestingSection";
 import HelpSection from "@/components/dashboard/HelpSection";
 import ConnectExtension from "@/components/ConnectExtension";
-import Reveal from "@/components/landing/Reveal";
-import SendSmartUsageCard from "@/components/SendSmartUsageCard";
 import FlaggedReviewSection from "@/components/dashboard/FlaggedReviewSection";
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       <DashboardHeader />
-      <div className="animate-fade-in">
-        <DashboardHero />
-      </div>
 
-      <div className="container mx-auto px-6 pb-24 space-y-8">
-        {/* Top row: Account + Pair extension */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <Reveal className="hover-scale"><AccountStatusCard /></Reveal>
-          <Reveal delay={80} className="hover-scale">
-            <div id="extension">
-              <ConnectExtension />
+      <div className="container mx-auto px-4 md:px-6 py-8">
+        <div className="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-8">
+          <SidebarRail />
+
+          <main className="space-y-10 min-w-0">
+            <OverviewHeader />
+            <StatTiles />
+
+            <div id="review">
+              <FlaggedReviewSection />
             </div>
-          </Reveal>
-        </div>
 
-        {/* Flagged for review */}
-        <Reveal delay={90}>
-          <div id="review">
-            <FlaggedReviewSection />
-          </div>
-        </Reveal>
+            <ActivitySection />
 
-        {/* WhatsReply usage (live from backend) */}
-        <Reveal delay={100}>
-          <div id="usage">
-            <SendSmartUsageCard />
-          </div>
-        </Reveal>
+            <div
+              id="extension"
+              className="grid md:grid-cols-2 gap-4"
+            >
+              <ConnectExtension />
+              <TestingSection />
+            </div>
 
-        {/* Download & Install */}
-        <Reveal delay={160}>
-          <DownloadInstallSection />
-        </Reveal>
+            <DownloadInstallSection />
 
-        {/* Two-column: Testing + Help */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          <Reveal delay={240} className="hover-scale"><TestingSection /></Reveal>
-          <Reveal delay={300} className="hover-scale"><HelpSection /></Reveal>
+            <HelpSection />
+          </main>
         </div>
       </div>
     </div>
