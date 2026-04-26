@@ -9,13 +9,22 @@ import HelpSection from "@/components/dashboard/HelpSection";
 import ConnectExtension from "@/components/ConnectExtension";
 import FlaggedReviewSection from "@/components/dashboard/FlaggedReviewSection";
 import doodleBg from "@/assets/dashboard-doodles.jpg";
+import doodleBgDark from "@/assets/dashboard-doodles-dark.jpg";
+import { useTheme } from "@/components/ThemeProvider";
 
 const Dashboard = () => {
+  const { theme } = useTheme();
+  const bg = theme === "dark" ? doodleBgDark : doodleBg;
+  const overlay =
+    theme === "dark"
+      ? "linear-gradient(to bottom, hsl(var(--background) / 0.78), hsl(var(--background) / 0.88))"
+      : "linear-gradient(to bottom, hsl(var(--background) / 0.92), hsl(var(--muted) / 0.85))";
+
   return (
     <div
       className="min-h-screen bg-background"
       style={{
-        backgroundImage: `linear-gradient(to bottom, hsl(var(--background) / 0.92), hsl(var(--muted) / 0.85)), url(${doodleBg})`,
+        backgroundImage: `${overlay}, url(${bg})`,
         backgroundRepeat: "no-repeat, repeat",
         backgroundSize: "cover, 480px auto",
         backgroundAttachment: "fixed, fixed",
