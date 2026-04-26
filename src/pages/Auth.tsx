@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { MessageCircle } from "lucide-react";
-import { registerAppAccount, checkAppMembership } from "@/lib/accountApp";
+import { registerAppAccount, checkAppMembership, PENDING_REGISTER_KEY } from "@/lib/accountApp";
 
 const Auth = () => {
   const { user, loading: authLoading } = useAuth();
@@ -44,6 +44,26 @@ const Auth = () => {
     } catch (err: any) {
       toast.error(err?.message ?? "Something went wrong");
     } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogle = async () => {
+    setLoading(true);
+    try {
+      // Mark intent so /auth/callback knows whether to register or check.
+      sessionStorage.setItem(
+        PENDING_REGISTER_KEY,
+        isLogin ? "" : "whatsreply"
+      );
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: `${window.location.origin}/auth/callback` },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      sessionStorage.removeItem(PENDING_REGISTER_KEY);
+      toast.error(err?.message ?? "Google sign-in failed");
       setLoading(false);
     }
   };
