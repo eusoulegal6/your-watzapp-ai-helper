@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { MessageCircle } from "lucide-react";
-import { registerAppAccount, checkAppMembership } from "@/lib/accountApp";
+import { registerAppAccount, checkAppMembership, PENDING_REGISTER_KEY } from "@/lib/accountApp";
 
 const Auth = () => {
   const { user, loading: authLoading } = useAuth();
@@ -44,6 +44,26 @@ const Auth = () => {
     } catch (err: any) {
       toast.error(err?.message ?? "Something went wrong");
     } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogle = async () => {
+    setLoading(true);
+    try {
+      // Mark intent so /auth/callback knows whether to register or check.
+      sessionStorage.setItem(
+        PENDING_REGISTER_KEY,
+        isLogin ? "" : "whatsreply"
+      );
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: `${window.location.origin}/auth/callback` },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      sessionStorage.removeItem(PENDING_REGISTER_KEY);
+      toast.error(err?.message ?? "Google sign-in failed");
       setLoading(false);
     }
   };
@@ -98,6 +118,28 @@ const Auth = () => {
               {loading ? "Please wait…" : isLogin ? "Sign in" : "Sign up"}
             </Button>
           </form>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or</span>
+            </div>
+          </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={handleGoogle}
+            disabled={loading}
+          >
+            <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.5-1.7 4.4-5.5 4.4-3.3 0-6-2.74-6-6.1s2.7-6.1 6-6.1c1.88 0 3.14.8 3.86 1.49l2.63-2.54C16.86 3.7 14.66 2.7 12 2.7 6.94 2.7 2.85 6.79 2.85 11.85S6.94 21 12 21c6.93 0 9.15-4.86 9.15-7.36 0-.5-.05-.88-.13-1.24H12z"/>
+            </svg>
+            Continue with Google
+          </Button>
 
           <p className="text-center text-xs text-muted-foreground">
             {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
