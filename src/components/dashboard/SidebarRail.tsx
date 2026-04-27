@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useSendSmartUsage } from "@/hooks/useSendSmartUsage";
-import { useFlaggedEmails } from "@/hooks/useFlaggedEmails";
+import { useThreadStates } from "@/hooks/useThreadStates";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -30,7 +30,7 @@ const navItems = [
 const SidebarRail = () => {
   const { user } = useAuth();
   const { data, isLoading } = useSendSmartUsage();
-  const { items } = useFlaggedEmails();
+  const { reviewItems: items } = useThreadStates({ onlyReview: true });
   const { handleDownload } = useExtensionDownload();
 
   const initials =
