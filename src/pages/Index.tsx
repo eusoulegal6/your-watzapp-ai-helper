@@ -3,9 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
-import ProductModesSection from "@/components/landing/ProductModesSection";
-import BenefitsSection from "@/components/landing/BenefitsSection";
-import InstallSection from "@/components/landing/InstallSection";
+import BentoFeatures from "@/components/landing/BenefitsSection";
 import CustomizationSection from "@/components/landing/CustomizationSection";
 import PricingSection from "@/components/landing/PricingSection";
 import FinalCTASection from "@/components/landing/FinalCTASection";
@@ -25,10 +23,8 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <Reveal><HowItWorksSection /></Reveal>
-      <Reveal delay={80}><ProductModesSection /></Reveal>
-      <Reveal delay={120}><BenefitsSection /></Reveal>
-      <Reveal delay={80}><InstallSection /></Reveal>
-      <Reveal delay={120}><CustomizationSection /></Reveal>
+      <Reveal delay={80}><BentoFeatures /></Reveal>
+      <Reveal delay={80}><CustomizationSection /></Reveal>
       <Reveal delay={80}><PricingSection /></Reveal>
       <Reveal delay={120}><FinalCTASection /></Reveal>
       <Footer />

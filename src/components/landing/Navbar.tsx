@@ -13,9 +13,8 @@ const Navbar = () => {
 
   const links = [
     { label: "How it works", href: "#how-it-works" },
-    { label: "Modes", href: "#modes" },
-    { label: "Benefits", href: "#benefits" },
-    { label: "Install", href: "#install" },
+    { label: "Features", href: "#features" },
+    { label: "Setup", href: "#setup" },
     { label: "Pricing", href: "#pricing" },
   ];
 
