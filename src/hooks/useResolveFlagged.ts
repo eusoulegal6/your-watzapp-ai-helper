@@ -6,8 +6,9 @@ import type { FlaggedEmail } from "./useFlaggedEmails";
 const RESOLVE_URL = `${SEND_SMART_URL}/functions/v1/review-resolve`;
 
 interface ResolveArgs {
-  threadId: string;
-  provider: string;
+  id: string;
+  threadId?: string;
+  provider?: string;
   resolution?: "handled" | "dismissed";
 }
 
@@ -15,7 +16,7 @@ export function useResolveFlagged() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ threadId, provider, resolution = "handled" }: ResolveArgs) => {
+    mutationFn: async ({ id, threadId, provider, resolution = "handled" }: ResolveArgs) => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -28,7 +29,7 @@ export function useResolveFlagged() {
           Authorization: `Bearer ${session.access_token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ thread_id: threadId, provider, resolution }),
+        body: JSON.stringify({ id, thread_id: threadId, provider, resolution }),
       });
 
       if (!res.ok) {
@@ -41,16 +42,14 @@ export function useResolveFlagged() {
         }
         throw new Error(message);
       }
-      return { threadId, provider };
+      return { id };
     },
-    onMutate: async ({ threadId, provider }) => {
+    onMutate: async ({ id }) => {
       await qc.cancelQueries({ queryKey: ["review-list"] });
       const previous = qc.getQueryData<{ items: FlaggedEmail[] }>(["review-list"]);
       if (previous) {
         qc.setQueryData<{ items: FlaggedEmail[] }>(["review-list"], {
-          items: previous.items.filter(
-            (item) => !(item.threadId === threadId && item.provider === provider),
-          ),
+          items: previous.items.filter((item) => item.id !== id),
         });
       }
       return { previous };
