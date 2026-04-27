@@ -1,11 +1,11 @@
 import { useSendSmartUsage } from "@/hooks/useSendSmartUsage";
-import { useThreadStates } from "@/hooks/useThreadStates";
+import { useFlaggedEmails } from "@/hooks/useFlaggedEmails";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MessageSquare, Flag, Cpu, Clock } from "lucide-react";
 
 const StatTiles = () => {
   const { data, isLoading } = useSendSmartUsage();
-  const { reviewCount } = useThreadStates({ onlyReview: true });
+  const { items } = useFlaggedEmails();
 
   const replied = data?.used.emails ?? 0;
   const tokens = (data?.used.inputTokens ?? 0) + (data?.used.outputTokens ?? 0);
@@ -26,7 +26,7 @@ const StatTiles = () => {
     },
     {
       label: "In review",
-      value: reviewCount.toLocaleString(),
+      value: items.length.toLocaleString(),
       icon: Flag,
       tint: "from-accent/15 to-accent/5 text-accent",
     },

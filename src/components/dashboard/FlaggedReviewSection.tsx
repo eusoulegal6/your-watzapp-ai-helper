@@ -3,25 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle, CheckCircle2, RefreshCw, Flag, Clock } from "lucide-react";
-import { useThreadStates } from "@/hooks/useThreadStates";
-import { BackendUnavailableError } from "@/lib/sendSmartBackend";
-import ReviewThreadCard from "./ReviewThreadCard";
+import { AlertTriangle, CheckCircle2, RefreshCw, Flag } from "lucide-react";
+import { useFlaggedEmails } from "@/hooks/useFlaggedEmails";
+import FlaggedEmailCard from "./FlaggedEmailCard";
 import { cn } from "@/lib/utils";
 
 export default function FlaggedReviewSection() {
-  const { reviewItems, isLoading, error, refetch, isFetching } =
-    useThreadStates({ onlyReview: true });
+  const { items, isLoading, error, refetch, isFetching } = useFlaggedEmails();
 
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Flag size={18} className="text-primary" />
-          <h2 className="text-xl font-semibold">In review</h2>
+          <h2 className="text-xl font-semibold">Flagged messages</h2>
           {!isLoading && !error && (
             <Badge variant="secondary" className="ml-1">
-              {reviewItems.length}
+              {items.length}
             </Badge>
           )}
         </div>
@@ -37,28 +35,11 @@ export default function FlaggedReviewSection() {
         </Button>
       </div>
 
-      {error && error instanceof BackendUnavailableError && (
-        <Card>
-          <CardContent className="p-6 flex items-start gap-3">
-            <Clock className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-medium text-sm">Waiting on backend</p>
-              <p className="text-sm text-muted-foreground">
-                The review queue will appear here once the{" "}
-                <code className="text-xs">thread-states-list</code> and{" "}
-                <code className="text-xs">dashboard-token-get</code> edge
-                functions are deployed on the send-smart-backend project.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {error && !(error instanceof BackendUnavailableError) && (
+      {error && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
-            Couldn't load review queue: {error.message}
+            Couldn't load flagged messages: {error.message}
           </AlertDescription>
         </Alert>
       )}
@@ -78,23 +59,22 @@ export default function FlaggedReviewSection() {
         </div>
       )}
 
-      {!isLoading && !error && reviewItems.length === 0 && (
+      {!isLoading && !error && items.length === 0 && (
         <Card>
           <CardContent className="p-8 flex flex-col items-center justify-center text-center gap-2">
             <CheckCircle2 className="h-8 w-8 text-primary" />
-            <p className="font-medium">No threads in review</p>
+            <p className="font-medium">All caught up</p>
             <p className="text-sm text-muted-foreground">
-              When the extension flags a message for your attention, it will
-              show up here.
+              No messages are waiting for your review.
             </p>
           </CardContent>
         </Card>
       )}
 
-      {!isLoading && !error && reviewItems.length > 0 && (
+      {!isLoading && !error && items.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {reviewItems.map((item) => (
-            <ReviewThreadCard key={item.id} thread={item} />
+          {items.map((email) => (
+            <FlaggedEmailCard key={email.id} email={email} />
           ))}
         </div>
       )}
