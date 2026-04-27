@@ -1,20 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { SEND_SMART_URL, SEND_SMART_ANON_KEY } from "@/integrations/supabase/backend";
+import type { FlaggedEmail } from "./useFlaggedEmails";
 
-const RESOLVE_URL =
-  "https://ocpphyjkstvfespxrajk.supabase.co/functions/v1/review-resolve";
-const SEND_SMART_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jcHBoeWprc3R2ZmVzcHhyYWprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODExMzUsImV4cCI6MjA5Mjc1NzEzNX0.wcqrpSVkgDZRPet_4yLcF5YYISsWqRacVNOHf_eW8uY";
+const RESOLVE_URL = `${SEND_SMART_URL}/functions/v1/review-resolve`;
 
-interface FlaggedListCache {
-  items: { id: string }[];
+interface ResolveArgs {
+  threadId: string;
+  provider: string;
+  resolution?: "handled" | "dismissed";
 }
 
 export function useResolveFlagged() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async ({ threadId, provider, resolution = "handled" }: ResolveArgs) => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -27,7 +28,7 @@ export function useResolveFlagged() {
           Authorization: `Bearer ${session.access_token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ thread_id: threadId, provider, resolution }),
       });
 
       if (!res.ok) {
@@ -40,26 +41,26 @@ export function useResolveFlagged() {
         }
         throw new Error(message);
       }
-      return id;
+      return { threadId, provider };
     },
-    onMutate: async (id) => {
-      await qc.cancelQueries({ queryKey: ["flagged-emails"] });
-      const previous = qc.getQueryData<FlaggedListCache>(["flagged-emails"]);
+    onMutate: async ({ threadId, provider }) => {
+      await qc.cancelQueries({ queryKey: ["review-list"] });
+      const previous = qc.getQueryData<{ items: FlaggedEmail[] }>(["review-list"]);
       if (previous) {
-        qc.setQueryData<FlaggedListCache>(["flagged-emails"], {
-          ...previous,
-          items: previous.items.filter((item) => item.id !== id),
+        qc.setQueryData<{ items: FlaggedEmail[] }>(["review-list"], {
+          items: previous.items.filter(
+            (item) => !(item.threadId === threadId && item.provider === provider),
+          ),
         });
       }
       return { previous };
     },
-    onError: (_err, _id, ctx) => {
-      if (ctx?.previous) {
-        qc.setQueryData(["flagged-emails"], ctx.previous);
-      }
+    onError: (_err, _vars, ctx) => {
+      if (ctx?.previous) qc.setQueryData(["review-list"], ctx.previous);
     },
     onSettled: () => {
-      qc.invalidateQueries({ queryKey: ["flagged-emails"] });
+      qc.invalidateQueries({ queryKey: ["review-list"] });
+      qc.invalidateQueries({ queryKey: ["send-smart-usage"] });
     },
   });
 }
