@@ -20,14 +20,20 @@ export interface FlaggedEmail {
 }
 
 interface RawReviewItem {
-  thread_id: string;
-  provider: string;
+  id: string;
+  thread_id?: string;
+  provider?: string;
   subject?: string | null;
   sender?: string | null;
+  senderEmail?: string | null;
+  senderName?: string | null;
+  snippet?: string | null;
   preview?: string | null;
+  reason?: string | null;
   review_reason?: string | null;
   review_summary?: string | null;
   review_opened_at?: string | null;
+  createdAt?: string | null;
   updated_at?: string | null;
   status_value?: string | null;
   thread_url?: string | null;
