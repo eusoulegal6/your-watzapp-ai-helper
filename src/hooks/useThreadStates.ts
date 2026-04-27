@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { callBackend } from "@/lib/sendSmartBackend";
+import { callBackend, BackendUnavailableError } from "@/lib/sendSmartBackend";
 
 export interface ThreadState {
   id: string;
@@ -28,8 +28,13 @@ export function useThreadStates(opts?: { onlyReview?: boolean }) {
 
   const query = useQuery<ThreadStatesResponse>({
     queryKey: ["thread-states", { onlyReview }],
-    refetchInterval: 10_000,
-    refetchOnWindowFocus: true,
+    // Stop polling/retrying once we know the backend isn't ready yet.
+    refetchInterval: (q) =>
+      q.state.error instanceof BackendUnavailableError ? false : 10_000,
+    refetchOnWindowFocus: (q) =>
+      !(q.state.error instanceof BackendUnavailableError),
+    retry: (failureCount, err) =>
+      err instanceof BackendUnavailableError ? false : failureCount < 1,
     staleTime: 5_000,
     queryFn: () =>
       callBackend<ThreadStatesResponse>("thread-states-list", {

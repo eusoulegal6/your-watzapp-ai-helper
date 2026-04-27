@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { callBackend } from "@/lib/sendSmartBackend";
+import { callBackend, BackendUnavailableError } from "@/lib/sendSmartBackend";
 
 export interface ThreadHistoryEntry {
   id: string;
@@ -21,8 +21,12 @@ interface ThreadHistoryResponse {
 export function useThreadHistory(limit = 25) {
   const query = useQuery<ThreadHistoryResponse>({
     queryKey: ["thread-history", { limit }],
-    refetchInterval: 10_000,
-    refetchOnWindowFocus: true,
+    refetchInterval: (q) =>
+      q.state.error instanceof BackendUnavailableError ? false : 10_000,
+    refetchOnWindowFocus: (q) =>
+      !(q.state.error instanceof BackendUnavailableError),
+    retry: (failureCount, err) =>
+      err instanceof BackendUnavailableError ? false : failureCount < 1,
     staleTime: 5_000,
     queryFn: () =>
       callBackend<ThreadHistoryResponse>("thread-history-list", {
