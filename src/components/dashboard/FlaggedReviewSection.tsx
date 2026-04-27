@@ -37,7 +37,24 @@ export default function FlaggedReviewSection() {
         </Button>
       </div>
 
-      {error && (
+      {error && error instanceof BackendUnavailableError && (
+        <Card>
+          <CardContent className="p-6 flex items-start gap-3">
+            <Clock className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="font-medium text-sm">Waiting on backend</p>
+              <p className="text-sm text-muted-foreground">
+                The review queue will appear here once the{" "}
+                <code className="text-xs">thread-states-list</code> and{" "}
+                <code className="text-xs">dashboard-token-get</code> edge
+                functions are deployed on the send-smart-backend project.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {error && !(error instanceof BackendUnavailableError) && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
