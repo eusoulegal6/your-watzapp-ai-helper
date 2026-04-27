@@ -55,7 +55,7 @@ const StatTiles = () => {
   }
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div id="usage" className="grid grid-cols-2 lg:grid-cols-4 gap-3 scroll-mt-20">
       {tiles.map((t) => (
         <div
           key={t.label}

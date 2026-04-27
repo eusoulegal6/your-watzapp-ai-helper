@@ -16,7 +16,7 @@ const FinalCTASection = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="lg" asChild>
-              <a href="#install" className="gap-2">
+              <a href="#install" className="gap-2 inline-flex items-center">
                 Install WhatsReply
                 <ArrowRight size={18} />
               </a>
