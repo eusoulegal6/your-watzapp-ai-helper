@@ -4,22 +4,23 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle, CheckCircle2, RefreshCw, Flag } from "lucide-react";
-import { useFlaggedEmails } from "@/hooks/useFlaggedEmails";
-import FlaggedEmailCard from "./FlaggedEmailCard";
+import { useThreadStates } from "@/hooks/useThreadStates";
+import ReviewThreadCard from "./ReviewThreadCard";
 import { cn } from "@/lib/utils";
 
 export default function FlaggedReviewSection() {
-  const { items, isLoading, error, refetch, isFetching } = useFlaggedEmails();
+  const { reviewItems, isLoading, error, refetch, isFetching } =
+    useThreadStates({ onlyReview: true });
 
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Flag size={18} className="text-primary" />
-          <h2 className="text-xl font-semibold">Flagged messages</h2>
+          <h2 className="text-xl font-semibold">In review</h2>
           {!isLoading && !error && (
             <Badge variant="secondary" className="ml-1">
-              {items.length}
+              {reviewItems.length}
             </Badge>
           )}
         </div>
@@ -39,7 +40,7 @@ export default function FlaggedReviewSection() {
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
-            Couldn't load flagged messages: {error.message}
+            Couldn't load review queue: {error.message}
           </AlertDescription>
         </Alert>
       )}
@@ -59,22 +60,23 @@ export default function FlaggedReviewSection() {
         </div>
       )}
 
-      {!isLoading && !error && items.length === 0 && (
+      {!isLoading && !error && reviewItems.length === 0 && (
         <Card>
           <CardContent className="p-8 flex flex-col items-center justify-center text-center gap-2">
             <CheckCircle2 className="h-8 w-8 text-primary" />
-            <p className="font-medium">All caught up</p>
+            <p className="font-medium">No threads in review</p>
             <p className="text-sm text-muted-foreground">
-              No messages are waiting for your review.
+              When the extension flags a message for your attention, it will
+              show up here.
             </p>
           </CardContent>
         </Card>
       )}
 
-      {!isLoading && !error && items.length > 0 && (
+      {!isLoading && !error && reviewItems.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {items.map((email) => (
-            <FlaggedEmailCard key={email.id} email={email} />
+          {reviewItems.map((item) => (
+            <ReviewThreadCard key={item.id} thread={item} />
           ))}
         </div>
       )}
