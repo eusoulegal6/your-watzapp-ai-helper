@@ -4,7 +4,6 @@ import SidebarRail from "@/components/dashboard/SidebarRail";
 import StatTiles from "@/components/dashboard/StatTiles";
 import ActivitySection from "@/components/dashboard/ActivitySection";
 import DownloadInstallSection from "@/components/dashboard/DownloadInstallSection";
-import TestingSection from "@/components/dashboard/TestingSection";
 import HelpSection from "@/components/dashboard/HelpSection";
 import ConnectExtension from "@/components/ConnectExtension";
 import FlaggedReviewSection from "@/components/dashboard/FlaggedReviewSection";
@@ -48,12 +47,8 @@ const Dashboard = () => {
 
             <ActivitySection />
 
-            <div
-              id="extension"
-              className="grid md:grid-cols-2 gap-4"
-            >
+            <div id="extension">
               <ConnectExtension />
-              <TestingSection />
             </div>
 
             <DownloadInstallSection />
