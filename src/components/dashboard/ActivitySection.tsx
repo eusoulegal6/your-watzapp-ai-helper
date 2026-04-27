@@ -41,8 +41,8 @@ const decisionTone: Record<string, string> = {
 };
 
 const labelFor = (eventType: string, decision: string | null) => {
-  if (decision) return decision.replaceAll("_", " ");
-  return eventType.replaceAll("_", " ");
+  const raw = decision || eventType;
+  return raw.split("_").join(" ");
 };
 
 const ActivitySection = () => {
