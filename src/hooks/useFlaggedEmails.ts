@@ -20,14 +20,20 @@ export interface FlaggedEmail {
 }
 
 interface RawReviewItem {
-  thread_id: string;
-  provider: string;
+  id: string;
+  thread_id?: string;
+  provider?: string;
   subject?: string | null;
   sender?: string | null;
+  senderEmail?: string | null;
+  senderName?: string | null;
+  snippet?: string | null;
   preview?: string | null;
+  reason?: string | null;
   review_reason?: string | null;
   review_summary?: string | null;
   review_opened_at?: string | null;
+  createdAt?: string | null;
   updated_at?: string | null;
   status_value?: string | null;
   thread_url?: string | null;
@@ -77,18 +83,21 @@ export function useFlaggedEmails() {
       const body = (await res.json()) as ReviewListResponse;
       const items = (body.items ?? [])
         .map<FlaggedEmail>((r) => {
-          const sender = parseSender(r.sender);
-          const createdAt = r.review_opened_at || r.updated_at || new Date().toISOString();
+          const sender = r.senderEmail
+            ? { email: r.senderEmail, name: r.senderName ?? null }
+            : parseSender(r.sender);
+          const createdAt =
+            r.review_opened_at || r.createdAt || r.updated_at || new Date().toISOString();
           return {
-            id: `${r.provider}:${r.thread_id}`,
-            threadId: r.thread_id,
-            provider: r.provider,
+            id: r.id,
+            threadId: r.thread_id ?? r.id,
+            provider: r.provider ?? "",
             createdAt,
             senderEmail: sender.email,
             senderName: sender.name,
             subject: r.subject ?? "",
-            snippet: r.preview ?? "",
-            reason: r.review_reason ?? undefined,
+            snippet: r.snippet ?? r.preview ?? "",
+            reason: r.reason ?? r.review_reason ?? undefined,
             summary: r.review_summary ?? undefined,
             statusValue: r.status_value ?? undefined,
             threadUrl: r.thread_url ?? undefined,
