@@ -136,16 +136,23 @@ export async function callBackend<T>(
     }
   }
 
-  const doFetch = async (token: string) =>
-    fetch(url.toString(), {
-      method,
-      headers: {
-        apikey: SEND_SMART_BACKEND_ANON_KEY,
-        Authorization: `Bearer ${token}`,
-        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
-      },
-      body: body !== undefined ? JSON.stringify(body) : undefined,
-    });
+  const doFetch = async (token: string) => {
+    try {
+      return await fetch(url.toString(), {
+        method,
+        headers: {
+          apikey: SEND_SMART_BACKEND_ANON_KEY,
+          Authorization: `Bearer ${token}`,
+          ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+        },
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+      });
+    } catch {
+      throw new BackendUnavailableError(
+        `Backend function "${path}" isn't reachable. Make sure it's deployed on send-smart-backend.`,
+      );
+    }
+  };
 
   let token = await getPairToken();
   let res = await doFetch(token);
@@ -155,6 +162,12 @@ export async function callBackend<T>(
     clearPairToken();
     token = await getPairToken(true);
     res = await doFetch(token);
+  }
+
+  if (res.status === 404) {
+    throw new BackendUnavailableError(
+      `Backend function "${path}" isn't deployed on send-smart-backend yet.`,
+    );
   }
 
   if (!res.ok) {
