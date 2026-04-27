@@ -58,7 +58,7 @@ export default function FlaggedEmailCard({ email }: { email: FlaggedEmail }) {
   const { toast } = useToast();
 
   const handleResolve = () => {
-    resolve.mutate(email.id, {
+    resolve.mutate({ threadId: email.threadId, provider: email.provider, resolution: "handled" }, {
       onSuccess: () => {
         toast({ title: "Marked as solved", description: "Removed from review queue." });
       },
