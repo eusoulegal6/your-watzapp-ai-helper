@@ -42,23 +42,51 @@ export function clearPairToken() {
   setCachedToken(null);
 }
 
+/**
+ * Error thrown when the backend itself isn't reachable / hasn't deployed
+ * the required edge functions yet. Hooks can use this to disable polling
+ * instead of retrying every 10s.
+ */
+export class BackendUnavailableError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "BackendUnavailableError";
+  }
+}
+
 async function fetchPairToken(): Promise<string> {
   const {
     data: { session },
   } = await supabase.auth.getSession();
   if (!session) throw new Error("Not signed in");
 
-  const res = await fetch(
-    `${SEND_SMART_BACKEND_URL}/functions/v1/dashboard-token-get`,
-    {
-      method: "POST",
-      headers: {
-        apikey: SEND_SMART_BACKEND_ANON_KEY,
-        Authorization: `Bearer ${session.access_token}`,
-        "Content-Type": "application/json",
+  let res: Response;
+  try {
+    res = await fetch(
+      `${SEND_SMART_BACKEND_URL}/functions/v1/dashboard-token-get`,
+      {
+        method: "POST",
+        headers: {
+          apikey: SEND_SMART_BACKEND_ANON_KEY,
+          Authorization: `Bearer ${session.access_token}`,
+          "Content-Type": "application/json",
+        },
       },
-    },
-  );
+    );
+  } catch (err) {
+    // Network-level failure (CORS preflight rejected, function not deployed,
+    // DNS, offline, etc.). The backend's `dashboard-token-get` function
+    // probably isn't deployed yet.
+    throw new BackendUnavailableError(
+      "Backend isn't reachable yet. Deploy the dashboard-token-get edge function on send-smart-backend.",
+    );
+  }
+
+  if (res.status === 404) {
+    throw new BackendUnavailableError(
+      "dashboard-token-get isn't deployed on send-smart-backend yet.",
+    );
+  }
 
   if (!res.ok) {
     let msg = `Could not load backend token (${res.status})`;
