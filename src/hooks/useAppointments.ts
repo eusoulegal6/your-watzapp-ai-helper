@@ -1,7 +1,6 @@
-import { useEffect } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { sendSmartBackend, SEND_SMART_URL, SEND_SMART_ANON_KEY } from "@/integrations/supabase/backend";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface Appointment {
   id: string;
@@ -16,76 +15,51 @@ export interface Appointment {
 }
 
 export function useAppointments() {
-  const qc = useQueryClient();
+  const { user, loading: authLoading } = useAuth();
+  const [items, setItems] = useState<Appointment[]>([]);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
 
-  const query = useQuery({
-    queryKey: ["appointments"],
-    staleTime: 30_000,
-    queryFn: async (): Promise<Appointment[]> => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session) throw new Error("Not signed in");
-
-      // Bridge dashboard JWT into send-smart backend client for RLS
-      const res = await fetch(
-        `${SEND_SMART_URL}/rest/v1/appointments?select=*&order=booked_at.desc`,
-        {
-          headers: {
-            apikey: SEND_SMART_ANON_KEY,
-            Authorization: `Bearer ${session.access_token}`,
-          },
-        },
-      );
-      if (!res.ok) {
-        let msg = `Request failed (${res.status})`;
-        try {
-          const b = await res.json();
-          if (b?.message) msg = b.message;
-        } catch {}
-        throw new Error(msg);
-      }
-      return (await res.json()) as Appointment[];
-    },
-  });
-
-  // Realtime: refresh when appointments change
   useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      setIsLoading(false);
+      setError(new Error("Please sign in to view appointments."));
+      return;
+    }
+
     let cancelled = false;
-    let channel: ReturnType<typeof sendSmartBackend.channel> | null = null;
     (async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (cancelled || !session) return;
-      try {
-        await sendSmartBackend.realtime.setAuth(session.access_token);
-      } catch {}
-      channel = sendSmartBackend
-        .channel(`appointments:${session.user.id}`)
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "appointments",
-            filter: `user_id=eq.${session.user.id}`,
-          },
-          () => qc.invalidateQueries({ queryKey: ["appointments"] }),
-        )
-        .subscribe();
+      setIsFetching(true);
+      const { data, error } = await (supabase as any)
+        .from("appointments")
+        .select("id, name, phone, service, date, time, booked_at, thread_id, created_at")
+        .order("booked_at", { ascending: false });
+
+      if (cancelled) return;
+      if (error) {
+        setError(new Error(error.message));
+        setItems([]);
+      } else {
+        setError(null);
+        setItems((data ?? []) as Appointment[]);
+      }
+      setIsLoading(false);
+      setIsFetching(false);
     })();
+
     return () => {
       cancelled = true;
-      if (channel) sendSmartBackend.removeChannel(channel);
     };
-  }, [qc]);
+  }, [authLoading, user?.id, reloadKey]);
 
   return {
-    items: query.data ?? [],
-    isLoading: query.isLoading,
-    error: query.error as Error | null,
-    refetch: query.refetch,
-    isFetching: query.isFetching,
+    items,
+    isLoading,
+    error,
+    isFetching,
+    refetch: () => setReloadKey((k) => k + 1),
   };
 }
