@@ -144,6 +144,14 @@ export default function DraftReplyFooter({
     );
   }
 
+  const incomingAccent = isComplaint
+    ? "border-red-400/50 ring-red-400/15 shadow-[0_0_18px_-8px_rgba(248,113,113,0.45)]"
+    : isAppointment
+      ? "border-amber-400/50 ring-amber-400/15 shadow-[0_0_18px_-8px_rgba(251,191,36,0.45)]"
+      : isSupport
+        ? "border-sky-400/50 ring-sky-400/15 shadow-[0_0_18px_-8px_rgba(56,189,248,0.45)]"
+        : "border-emerald-400/50 ring-emerald-400/15 shadow-[0_0_18px_-8px_rgba(52,211,153,0.45)]";
+
   return (
     <div className="mt-1 rounded-lg border border-border bg-muted/40 p-3 space-y-2.5">
       <div className="space-y-1">
@@ -151,7 +159,13 @@ export default function DraftReplyFooter({
           Incoming message
         </span>
         {hasIncoming ? (
-          <div className="rounded-md border border-border bg-background p-2.5 text-xs whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">
+          <div
+            key={incoming}
+            className={cn(
+              "rounded-md border bg-background p-2.5 text-xs whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto ring-1 animate-wipe-in-left",
+              incomingAccent,
+            )}
+          >
             {incoming}
           </div>
         ) : (
@@ -160,6 +174,7 @@ export default function DraftReplyFooter({
           </div>
         )}
       </div>
+
 
       {isSupport && supportDocs.length > 0 && (
         <div className="space-y-1">
