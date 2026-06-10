@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import type { FlaggedMessage } from "@/hooks/useFlaggedMessages";
 import type { DraftState } from "@/lib/flagged-utils";
+import Typewriter from "./Typewriter";
 
 export default function DraftReplyFooter({
   item,
@@ -160,13 +161,12 @@ export default function DraftReplyFooter({
         </span>
         {hasIncoming ? (
           <div
-            key={incoming}
             className={cn(
-              "rounded-md border bg-background p-2.5 text-xs whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto ring-1 animate-wipe-in-left",
+              "rounded-md border bg-background p-2.5 text-xs whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto ring-1",
               incomingAccent,
             )}
           >
-            {incoming}
+            <Typewriter text={incoming} />
           </div>
         ) : (
           <div className="rounded-md border border-dashed border-border bg-background/50 p-2.5 text-[11px] text-muted-foreground italic">
