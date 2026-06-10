@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import type { FlaggedMessage } from "@/hooks/useFlaggedMessages";
 import type { DraftState } from "@/lib/flagged-utils";
+import Typewriter from "./Typewriter";
 
 export default function DraftReplyFooter({
   item,
