@@ -126,15 +126,13 @@ const MONTHS: Record<string, number> = {
   // Portuguese
   janeiro: 0,
   fevereiro: 1, fev: 1,
-  "março": 2, marco: 2, mar: 2,
-  abril: 3, abr: 3,
+  "março": 2, marco: 2,
   maio: 4,
-  junho: 5, jun: 5,
-  julho: 6, jul: 6,
-  agosto: 7, ago: 7,
-  setembro: 8, set: 8,
+  junho: 5,
+  julho: 6,
+  setembro: 8,
   outubro: 9, out: 9,
-  novembro: 10, nov: 10,
+  novembro: 10,
   dezembro: 11, dez: 11,
 };
 
@@ -165,7 +163,7 @@ const DAYS: Record<string, DayIndex> = {
   viernes: 5, vie: 5,
   "sábado": 6, sabado: 6,
   // Portuguese
-  domingo: 0, dom: 0,
+  // (domingo/dom already defined under Spanish)
   "segunda-feira": 1, "segunda feira": 1, segunda: 1, seg: 1,
   "terça-feira": 2, "terca-feira": 2, "terça feira": 2, "terca feira": 2,
   "terça": 2, terca: 2, ter: 2,
