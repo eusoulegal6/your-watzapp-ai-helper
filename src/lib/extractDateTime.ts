@@ -163,7 +163,7 @@ const DAYS: Record<string, DayIndex> = {
   viernes: 5, vie: 5,
   "sábado": 6, sabado: 6,
   // Portuguese
-  domingo: 0, dom: 0,
+  // (domingo/dom already defined under Spanish)
   "segunda-feira": 1, "segunda feira": 1, segunda: 1, seg: 1,
   "terça-feira": 2, "terca-feira": 2, "terça feira": 2, "terca feira": 2,
   "terça": 2, terca: 2, ter: 2,
